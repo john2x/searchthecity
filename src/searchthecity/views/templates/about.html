@@ -1,10 +1,39 @@
 
 {% extends "searchthecity/views/templates/base.html" %}
 
+{% block title %}About{% endblock %}
 
-
+{% block jumbotron-header %}Search the City{% endblock %}
+{% block jumbotron-subheader %}RESTful API for magiccards.info{% endblock %}
 {% block content %}
+<h1>F.A.Q.</h1>
+<dl>
+	<dt>Why magiccards.info?</dt>
+	<dd>The search results list of magiccards.info has more information in it than Wizard's Gatherer. It includes, among other things, the card's flavor text, for instance.</dd>
+	<br/>
 
- <p>this is the story of searchthecity... work in progress</p>
+	<dt>What sort of queries can I perform?</dt>
+	<dd>All query syntax from magiccards.info is supported, except for the language syntax (e.g. <code>l:de</code>). For more info, go to the <a href="/syntax">syntax page</a> or <a href="http://magiccards.info/syntax.html">magiccard.info's syntax page</a>.<br>
+		<strong>NOTE: Search results only return English versions of the cards.</strong>
+	</dd>
+	<br/>
+
+	<dt>Why doesn't language query work?</dt>
+	<dd>When showing search results of non-English cards, the English translation of the card is included in the markup and messes up with the scraper. But it's definitely on the TODO list to to allow language queries.</dd>
+	<br/>
+
+	<dt>How do I go to the next/previous page of a query?</dt>
+	<dd>Include the <code>p</code> parameter to your request. e.g. <code>http://searchthecity.me/api?q=goblin&p=2</code></dd>
+	<br/>
+
+	<dt>What return formats are available?</dt>
+	<dd>Right now, only JSON.</dd>
+	<br/>
+
+	<dt>I found a bug/I want feature X.</dt>
+	<dd>Search the City is beta software. If you find a bug or would like a feature to be implemented, I would love to hear from you. Hit me up on Twitter. See the footer, below.</dd>
+</dl>
+ <p></p>
+
 
 {% endblock %}

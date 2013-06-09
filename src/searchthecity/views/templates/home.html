@@ -2,22 +2,54 @@
 {% extends "searchthecity/views/templates/base.html" %}
 
 
+{% block title %}Home{% endblock %}
 
+{% block jumbotron-header %}Search the City{% endblock %}
+{% block jumbotron-subheader %}RESTful API for magiccards.info{% endblock %}
 {% block content %}
 
+<div class="row">
+  <div class="span3 bs-docs-sidebar">
+    <br/>
+    <form method="get" action="/api">
+      <label>Try it out!</label>
+      <input type="text" name="q">
+      <button type="submit" class="btn btn-info" id="btn-search">Search</button>
+    </form>
+    <h4>Some suggestions</h4>
+    <ul id="suggestions">
+      <li><a href="javascript:void(0);">Search the City</a></li>
+      <li><a href="javascript:void(0);">o:"whenever ~ deals combat damage"</a></li>
+      <li><a href="javascript:void(0);">is:split</a></li>
+      <li><a href="javascript:void(0);">e:al+be</a> (Cards that appear in Alpha and Beta)</li>
+    </ul>
+    <p>For more info, check out the <a href="/syntax">syntax help</a> page.</p>
+  </div>
+  <div class="span9">
 
- <div class="hero-unit">
-    <h1>Welcome to searchthecity</h1>
-    <p>Time to start building your site!</p>
-    <p><a class="btn btn-primary btn-large" href="http://luminusweb.net">Learn more &raquo;</a></p>
- </div>
- 
- <div class="row-fluid">
-    <div class="span8">       
-    {{content}}
-    </div>
- </div>
+  <div class="page-header">
+    <h1>Search Results
+    <img src="/img/preloader.gif" id="preloader" style="display: none;">
+    </h1>
+    <pre style="display: none;" id="query-string">Foo</pre>
+  </div>
 
+  <div class="row">
+  <span class="pull-right">
+  <a href="javascript:void(0);" class="clear">Clear</a>
+  </span>
+  </div>
+  <pre class="prettyprint" id="search-results">Enter a query to get started.</pre>
+  <div class="row">
+  <span class="pull-right">
+  <a href="javascript:void(0);" class="clear">Clear</a>
+  </span>
+  </div>
+</div>
+</div>
 
+{% endblock %}
+{% block extra-js %}
+<script src="/js/demo.js"></script>
 {% endblock %}
 

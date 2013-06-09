@@ -1,0 +1,96 @@
+
+{% extends "searchthecity/views/templates/base.html" %}
+
+{% block title %}Syntax{% endblock %}
+
+{% block jumbotron-header %}Search the City{% endblock %}
+{% block jumbotron-subheader %}RESTful API for magiccards.info{% endblock %}
+{% block content %}
+
+
+<h1>Syntax Help</h1>
+<p>All these options can be combined to more complicated queries: 
+  "a or b", "a not b", "a -b", "a (b or c)", "a or (b c)", and so on.</p>
+<dl>
+  <dt>Name:</dt>
+  <dd><a href="/api?q=Birds+of+Paradise">Birds of Paradise</a></dd>
+  <dd><a href="/api?q=%22Birds+of+Paradise%22">"Birds of Paradise"</a></dd>
+  <dd><a href="/api?q=%21Anger">!Anger</a> (Match the full name)</dd>
+  
+  <dt>Rules Text (<u>O</u>racle):</dt>
+  <dd><a href="/api?q=o%3AFlying">o:Flying</a></dd>
+  <dd><a href="/api?q=o%3A%22First+strike%22">o:"First strike"</a></dd>
+  <dd><a href="/api?q=o%3A%7BT%7D+o%3A%22add+one+mana+of+any+color%22">o:{T} o:"add one mana of any color"</a></dd>
+  <dd><span class="addition">(new)</span> <a href="/api?q=o%3A%22whenever+%7E+deals+combat+damage%22">o:"whenever ~ deals combat damage"</a></dd>
+  
+  <dt><u>T</u>ypes (Oracle):</dt>
+  <dd><a href="/api?q=t%3Aangel">t:angel</a></dd>
+  <dd><a href="/api?q=t%3A%22legendary+angel%22">t:"legendary angel"</a></dd>
+  <dd><a href="/api?q=t%3Abasic">t:basic</a></dd>
+  <dd><a href="/api?q=t%3A%22arcane+instant%22">t:"arcane instant"</a></dd>
+  
+  <dt><u>C</u>olors:</dt>
+  <dd><a href="/api?q=c%3Aw">c:w</a> (Any card that is white)</dd>
+  <dd><a href="/api?q=c%3Awu">c:wu</a> (Any card that is white or blue)</dd>
+  <dd><a href="/api?q=c%3Awum">c:wum</a> (Any card that is white or blue, and multicolored)</dd>
+  <dd><a href="/api?q=c%21w">c!w</a> (Cards that are only white)</dd>
+  <dd><a href="/api?q=c%21wu">c!wu</a> (Cards that are only white or blue, or both)</dd>
+  <dd><a href="/api?q=c%21wum">c!wum</a> (Cards that are only white and blue, and multicolored)</dd>
+  <dd><a href="/api?q=c%21wubrgm">c!wubrgm</a> (Cards that are all five colors)</dd>
+  <dd><a href="/api?q=c%3Am">c:m</a> (Any multicolored card)</dd>
+  <dd><a href="/api?q=c%3Al+or+c%3Ac">c:l or c:c</a> (Lands and colorless cards)</dd>
+  
+  <dt><u>C</u>olor <u>I</u>dentity:</dt>
+  <dd><a href="/api?q=ci%3Awu">ci:wu</a> (Any card that is white or blue, but does not contain any black, red or green mana symbols)</dd>
+  
+  <dt>Color <u>In</u>dicator:</dt>
+  <dd><span class="addition">(new)</span> <a href="/api?q=in%3Awu">in:wu</a> (Any card that is white or blue according to the color indicator.)</dd>
+  
+  <dt><u>Mana</u> Cost:</dt>
+  <dd><a href="/api?q=mana%3D3G">mana=3G</a> (Spells that cost exactly 3G, or split cards that can be cast with 3G)</dd>
+  <dd><a href="/api?q=mana%3E%3D2WW">mana&gt;=2WW</a> (Spells that cost at least two white and two colorless mana)</dd>
+  <dd><a href="/api?q=mana%3CGGGGGG">mana&lt;GGGGGG</a> (Spells that can be cast with strictly less than six green mana)</dd>
+  <dd><a href="/api?q=mana%3E%3D2RR+mana%3C%3D6RR">mana&gt;=2RR mana&lt;=6RR</a> (Spells that cost two red mana and between two and six colorless mana)</dd>
+  <dd><span class="addition">(new)</span> <a href="/api?q=mana%3E%3D%7B2%2FR%7D">mana&gt;={2/R}</a></dd>
+  <dd><span class="addition">(new)</span> <a href="/api?q=mana%3E%3D%7BW%2FU%7D">mana&gt;={W/U}</a></dd>
+  <dd><span class="addition">(new)</span> <a href="/api?q=mana%3E%3D%7BUP%7D">mana&gt;={UP}</a></dd>
+  
+  <dt><u>Pow</u>er, <u>Tou</u>ghness, <u>C</u>onverted <u>M</u>ana <u>C</u>ost:</dt>
+  <dd><a href="/api?q=pow%3E%3D8">pow&gt;=8</a></dd>
+  <dd><a href="/api?q=tou%3Cpow">tou&lt;pow</a> (All combinations are possible)</dd>
+  <dd><a href="/api?q=cmc%3D7">cmc=7</a></dd>
+  <dd><span class="addition">(new)</span> <a href="/api?q=cmc%3E%3D%2A">cmc>=*</a></dd>
+  
+  <dt><u>R</u>arity:</dt>
+  <dd><a href="/api?q=r%3Amythic">r:mythic</a></dd>
+  
+  <dt><u>F</u>ormat:</dt>
+  <dd><a href="/api?q=f%3Astandard">f:standard</a> (or block, extended, vintage, classic, legacy, modern, commander)</dd>
+  <dd><a href="/api?q=banned%3Aextended">banned:extended</a> (or legal, restricted)</dd>
+  
+  <dt><u>A</u>rtist:</dt>
+  <dd><a href="/api?q=a%3A%22rk+post%22">a:"rk post"</a></dd>
+  
+  <dt><u>E</u>dition:</dt>
+  <dd><a href="/api?q=e%3Aal%2Fen">e:al/en</a> (Uses the abbreviations that are listed on the sitemap)</dd>
+  <dd><span class="addition">(new)</span> <a href="/api?q=e%3Aal%2Cbe">e:al,be</a> (Cards that appear in Alpha or Beta)</dd>
+  <dd><span class="addition">(new)</span> <a href="/api?q=e%3Aal%2Bbe">e:al+be</a> (Cards that appear in Alpha and Beta)</dd>
+  <dd><span class="addition">(new)</span> <a href="/api?q=e%3Aal%2Cbe+-e%3Aal%2Bbe">e:al,be -e:al+be</a> (Cards that appear in Alpha or Beta but not in both editions)</dd>
+  <dd><span class="addition">(new)</span> <a href="/api?q=year%3C%3D1995">year&lt;=1995</a> (Cards printed in 1995 and earlier)</dd>
+  
+  <dt><u>Is</u>:</dt>
+  
+  <dd><a href="/api?q=is%3Asplit">is:split</a>, <a href="/api?q=is%3Aflip">is:flip</a></dd>
+  <dd><a href="/api?q=is%3Avanilla">is:vanilla</a> (Creatures with no card text)</dd>
+  <dd><a href="/api?q=is%3Aold">is:old</a>, <a href="/api?q=is%3Anew">is:new</a>, <a href="/api?q=is%3Afuture">is:future</a> (Old/new/future card face)</dd>
+  <dd><a href="/api?q=is%3Atimeshifted">is:timeshifted</a></dd>
+  <dd><a href="/api?q=is%3Afunny">is:funny</a>, <a href="/api?q=not%3Afunny">not:funny</a> (Unglued/Unhinged/Happy Holidays Promos)</dd>
+  <dd><a href="/api?q=is%3Apromo">is:promo</a> (Promotional cards)</dd>
+  <dd><a href="/api?q=is%3Apromo+is%3Aold">is:promo is:old</a> (Promotional cards with the original card face)</dd>
+  <dd><span class="addition">(new)</span> <a href="/api?q=is%3Apermanent">is:permanent</a>, <a href="/api?q=is%3Aspell">is:spell</a></dd>
+  <dd><span class="addition">(new)</span> <a href="/api?q=is%3Ablack-bordered">is:black-bordered</a>, <a href="/api?q=is%3Awhite-bordered">is:white-bordered</a>, <a href="/api?q=is%3Asilver-bordered">is:silver-bordered</a></dd>
+  <dd><span class="addition">(new)</span> <a href="/api?q=has%3Afoil">has:foil</a></dd>
+  
+</dl>
+
+{% endblock %}

@@ -1,35 +1,102 @@
+
 <!DOCTYPE html>
-<html>
-<head>
-	<title>Welcome to searchthecity</title>
-	<link href="{{context}}/css/screen.css" rel="stylesheet" type="text/css"></link>
-	<script type="text/javascript">
-	var context = "{{context}}";
-	</script>
-</head>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Search the City - {% block title %}{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Le styles -->
+    <link href="/css/bootstrap.css" rel="stylesheet">
+    <link href="/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="/css/docs.css" rel="stylesheet">
+    <link href="/css/prettify.css" rel="stylesheet">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="assets/js/html5shiv.js"></script>
+    <![endif]-->
+
+  </head>
+
 <body>
-    <div id="wrap">
-		<div class="navbar navbar-fixed-top navbar-inverse">
-			<div class="navbar-inner">
-				<ul class="nav">
-					<li><a href="{{context}}/">Home</a></li>
-					<li><a href="{{context}}/about">About</a></li>
-				</ul>
-			</div>
-		</div>
-		<div class="container">		
-			
-{% block content %}
 
-{% endblock %}
+<!-- Subhead
+================================================== -->
+<header class="jumbotron subhead" id="overview">
+  <div class="container">
+    <h1>{% block jumbotron-header %}Search the City{% endblock %}</h1>
+    <p class="lead">{% block jumbotron-subheader %}Bootstrap is built on responsive 12-column grids, layouts, and components.{% endblock %}</p>
+  </div>
+</header>
 
-		</div>		
-	    <div id="push"></div>
-	</div>
-	<div id="footer">
-         <div class="container">                
-             <p class="muted footer-text">Footer content.</p>
-         </div>
-    </div>        
-</body>
+  <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="brand" href="#">Search the City</a>
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+              <li><a href="/">Home</a></li>
+              <li><a href="/about">About</a></li>
+              <li><a href="/syntax">Help</a></li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+  <div class="container">
+    {% block content %}
+
+    {% endblock %}
+
+  </div>
+<!-- Footer
+================================================== -->
+<footer class="footer">
+  <div class="container">
+    <p>The information presented on this site about Magic: The Gathering, both literal and graphical, is copyrighted by Wizards of the Coast.</p>
+    <p>This website is not produced, endorsed, supported, or affiliated with Wizards of the Coast.</p>
+    <ul class="footer-links">
+      <li><a href="http://twitter.com/john2x">@john2x</a></li>
+      <li class="muted">&middot;</li>
+      <li><a href="http://twitter.github.io/bootstrap">Styles from Bootstrap</a></li>
+   </ul>
+  </div>
+</footer>
+
+
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.js"></script>
+
+    {% block extra-js %}
+    {% endblock %}
+    <!-- Analytics
+    ================================================== -->
+    <script>
+      var _gauges = _gauges || [];
+      (function() {
+        var t   = document.createElement('script');
+        t.type  = 'text/javascript';
+        t.async = true;
+        t.id    = 'gauges-tracker';
+        t.setAttribute('data-site-id', '4f0dc9fef5a1f55508000013');
+        t.src = '//secure.gaug.es/track.js';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(t, s);
+      })();
+    </script>
+
+  </body>
 </html>

@@ -1,55 +1,44 @@
-body {	
-    background-color: #fff;
-    color: #333;
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+/* Sticky footer styles
+-------------------------------------------------- */
+
+html,
+body {
+height: 100%;
+/* The html and body elements cannot have any padding or margin. */
 }
 
-#register {
-    float: left;
-    display: inline-block;
+/* Wrapper for page content to push down footer */
+#wrap {
+min-height: 100%;
+height: auto !important;
+height: 100%;
+/* Negative indent footer by it's height */
+margin: 0 auto -60px;
 }
 
-h1 {
-    -webkit-border-radius: 4px;
-    -moz-border-radius: 4px;
-	background-color: #E9E9E9;
-	border: 1px solid #CFCFCF;
-	border-radius: 4px;
+/* Set the fixed height of the footer here */
+#push,
+#footer {
+height: 60px;
+}
+#footer {
+background-color: #f5f5f5;
 }
 
-.nav li {
-    float: left;
-    list-style: none;
-    padding: 5px;
+/* Lastly, apply responsive CSS fixes as necessary */
+@media (max-width: 767px) {
+    #footer {
+      margin-left: -20px;
+      margin-right: -20px;
+      padding-left: 20px;
+      padding-right: 20px;
+    }
 }
 
-.navbar {
-    text-align: right;
-    padding: 5px;
-    margin-bottom: 10px;
+.container {
+    width: auto;
+    max-width: 680px;
 }
-
-#container {
-    height: auto;
-    margin-bottom: 10px;
-}
-
-#footer {    
-    width: 95%;
-    margin-left: 1%;
-    margin-right: 1%;
-    position:absolute;
-    bottom:0;
-    font-size: 11px;
-    font-weight: bold;
-    height: auto;    
-    text-align: center;
-    
-	padding-top: 10px;
-	
-	-webkit-border-radius: 4px;
-    -moz-border-radius: 4px;
-	background-color: #E9E9E9;
-	border: 1px solid #CFCFCF;
-	border-radius: 4px;
+.container .credit {
+    margin: 20px 0;
 }

@@ -7,9 +7,9 @@
 
 (defn query [request]
   (let [params (:params request)
-        result (mci/query-mci (:q params) (Integer/parseInt (:p params "1")))]
+        result (mci/query-mci (or (:q params) "") (Integer/parseInt (:p params "1")))]
     (println params)
     (noir.response/json result)))
 
 (defroutes api-routes
-  (GET "/query" [request] query))
+  (GET "/api" [request] query))
