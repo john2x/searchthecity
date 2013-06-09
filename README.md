@@ -4,6 +4,11 @@ RESTful API for [magiccards.info](http://magiccards.info).
 
 Supports the same [syntax](http://magiccards.info/syntax.html).
 
+## TODO
+
+1. missing `q` parameter raises exception
+2. build simple UI
+
 ## Example
 
 `http://api.searchthecity.me/query?q=goblins`
