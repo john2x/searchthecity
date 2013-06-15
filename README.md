@@ -6,7 +6,7 @@ Supports the same [syntax](http://magiccards.info/syntax.html).
 
 ## TODO
 
-2. build simple UI
+1. allow more than 20 results per page
 
 ## Example
 
