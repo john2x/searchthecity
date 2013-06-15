@@ -148,6 +148,8 @@
 (def goblins-page-2 (mci/query-mci "goblin" 2))
 (def no-results (mci/query-mci "asdf" nil))
 (def ornithopter (mci/query-mci "ornithopter" nil))
+(def anger (mci/query-mci "!Anger" nil))
+
 (deftest magiccardsinfo-test
   ; thopters!
   (is (=
@@ -165,6 +167,7 @@
          ornithopter))
   ; no results
   (is (= {:cards nil :pagination nil} no-results))
+  (is (= 1 (count (:cards anger))))
   )
 
 

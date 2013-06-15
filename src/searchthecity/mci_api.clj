@@ -39,7 +39,9 @@
 (defn build-url
   [q page]
   ; append "l:en" to force only english cards results
-  (java.net.URL. (format MCIQ (url-encode (str q " l:en")) (or page 1))))
+  ; but don't append when using ! syntax
+  (let [query (if (-> (first q) (not= \!)) (str q " l:en") q)]
+    (java.net.URL. (format MCIQ (url-encode query) (or page 1)))))
 
 (defn fetch-mci-resource
   [url]
