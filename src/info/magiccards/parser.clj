@@ -1,11 +1,13 @@
-(ns searchthecity.mci-api
+;; Methods to parse the DOM of search query results from magiccards.info
+;; ...
+;; Here be dragons
+
+(ns info.magiccards.parser
   (:require [clj-http.client :as http]
             [clojure.string :as s]
             [searchthecity.util :as util])
   (:use [clj-http.util :only [url-decode url-encode]]
         [net.cgrand.enlive-html :as en]))
-
-; TODO: allow non-english cards
 
 (def MCI "http://magiccards.info")
 (def MCIQ (str MCI "/query?q=%s&v=card&s=cname&p=%d"))
@@ -15,39 +17,19 @@
 (def CARDTYPE-RE #"[\w ]+(::)?")
 (def CARDS-PER-PAGE 20)
 
-(defn syntax-name
+(defn- syntax-name
   [names]
   (s/join " " names))
 
-(defn syntax-rules-text
+(defn- syntax-rules-text
   [rules-texts]
   (s/join " " (map #(str "o:" %) rules-texts)))
 
-(defn syntax-card-type
+(defn- syntax-card-type
   [types]
   (s/join " " (map #(str "t:" %) types)))
 
-(defn build-query
-  [query-params]
-  (let [qnames (syntax-name (:names query-params))
-        qrules (syntax-rules-text (:rules query-params))
-        qtypes (syntax-card-type (:types query-params))]
-    (url-encode (->> [qnames qrules qtypes]
-                          (s/join " ")
-                          s/trim))))
-
-(defn build-url
-  [q page]
-  ; append "l:en" to force only english cards results
-  ; but don't append when using ! syntax
-  (let [query (if (-> (first q) (not= \!)) (str q " l:en") q)]
-    (java.net.URL. (format MCIQ (url-encode query) (or page 1)))))
-
-(defn fetch-mci-resource
-  [url]
-  (-> url en/html-resource))
-
-(defn split-mci-resource
+(defn- split-mci-resource
   [page-resource]
   (if (seq (-> page-resource (en/select [:h1])))
     {:pagination-resource nil
@@ -57,7 +39,7 @@
      :cards-resource (-> (en/select page-resource [:table])
                          vec (subvec 3) butlast)}))
 
-(defn parse-power-toughness
+(defn- parse-power-toughness
   [s]
   (if 
     (or (s/blank? s) (not (re-find PT-RE s))) {:power nil :toughness nil}
@@ -68,7 +50,7 @@
       {:power     power
        :toughness toughness})))
 
-(defn parse-loyalty
+(defn- parse-loyalty
   [s]
   (if 
     (or (s/blank? s) (not (re-find LOYALTY-RE s))) {:loyalty nil}
@@ -76,7 +58,7 @@
                       (s/split #":") last s/trim (s/replace #"\)" ""))]
       {:loyalty loyalty})))
 
-(defn parse-manacost
+(defn- parse-manacost
   [s]
   (cond
     (= s "0") {:manacost 0 :cmc 0}
@@ -87,7 +69,7 @@
       {:manacost (or manacost 0)
        :cmc      (or cmc 0)})))
 
-(defn parse-card-type
+(defn- parse-card-type
   [s]
   (if
     (or (s/blank? s) (not (re-find CARDTYPE-RE s))) {:type nil :subtype nil}
@@ -103,7 +85,7 @@
       )))
 
 
-(defn parse-card-attrs
+(defn- parse-card-attrs
   [attrs]
   (let [type+pt-part  (-> attrs (s/split #",") first)
         manacost-part (-> attrs (s/split #",") last s/trim)
@@ -119,7 +101,7 @@
       :else attrs-map
       )))
 
-(defn parse-card
+(defn- parse-card
   [card-resource]
   (if (nil? card-resource) nil
     (let [card-image-col (nth (en/select card-resource [:td]) 0)
@@ -147,39 +129,39 @@
        :rules-text  rules-text
        :flavor-text flavor-text})))
 
-(defn extract-page-num
+(defn- extract-page-num
   [href]
   (if (s/blank? href) 1
     (let [page-param (re-find #"&p=\d+" href)]
       (if page-param (-> page-param (s/split #"=") last Integer/parseInt)
         nil))))
 
-(defn total-cards-column
+(defn- total-cards-column
   [pagination-resource]
   (-> pagination-resource
       (en/select [[:td (attr= :align "right")]])
       first))
 
-(defn pages-column
+(defn- pages-column
   [pagination-resource]
   (-> pagination-resource
       (en/select [[:td (attr= :align "center")]])
       first))
 
-(defn next-page-link-column
+(defn- next-page-link-column
   [pagination-resource]
   (-> pagination-resource
       (en/select [:td])
       first))
 
-(defn multiple-cards?
+(defn- multiple-cards?
   "look for the 'n cards' text in total-cards-column"
   [pagination-resource]
   (let [total-cards (-> pagination-resource total-cards-column
                         :content first)]
     (re-find #"\d+ cards" total-cards)))
 
-(defn parse-pagination
+(defn- parse-pagination
   [pagination-resource]
   (cond
     (nil? pagination-resource) nil
@@ -205,14 +187,3 @@
                                  nil)]
            (merge pagination {:current-page curr-page-num}))
         pagination))))
-
-(defn query-mci
-  [q page]
-  (let [url (build-url q page)
-        resources (split-mci-resource (fetch-mci-resource url))
-        pagination (parse-pagination (:pagination-resource resources))
-        cards (map parse-card (:cards-resource resources))]
-    {:cards (seq cards)
-     :pagination pagination}
-     ))
-
