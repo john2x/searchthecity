@@ -102,6 +102,8 @@ You'll need [Leiningen 2][lein]
     $ lein ring server
       # open a browser to http://localhost:3000 (lein ring server should also do it for you though)
 
+[lein]: https://github.com/technomancy/leiningen
+
 ## Deploying
 
 Unfortunately I'm not an expert on deployment strategies for Java/Clojure web apps. 
