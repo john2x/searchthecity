@@ -94,6 +94,24 @@ Supports the same [syntax](http://magiccards.info/syntax.html).
 
 - only searches for English cards
 
+## Running locally
+
+You'll need [Leiningen 2][lein]
+
+    $ cd searchthecity/
+    $ lein ring server
+      # open a browser to http://localhost:3000 (lein ring server should also do it for you though)
+
+## Deploying
+
+Unfortunately I'm not an expert on deployment strategies for Java/Clojure web apps. 
+Would love to have some input on how to propery serve Clojure web apps, especially the "setting up Jetty/Tomcat properly and making it work with Nginx" part.
+
+But running `lein ring uberwar` and sticking the resulting .war file onto a server running Tomcat worked for me. 
+
+
 ## License
+
+MIT (see `LICENSE` file)
 
 Copyright © 2013 John Louis Del Rosario
